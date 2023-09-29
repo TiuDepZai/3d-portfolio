@@ -10,6 +10,7 @@ import { slideIn } from "../utils/motion";
 
 
 const Contact = () => {
+  console.log(process.env.APIKEY);
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
@@ -45,7 +46,7 @@ const Contact = () => {
           to_email: "duongnguyen660@hotmail.com",
           message: form.message,
         },
-        'ayRYrshGcuTQwYe4j'
+        process.env.APIKEY
       )
       .then(
         () => {
