@@ -10,7 +10,6 @@ import { slideIn } from "../utils/motion";
 
 
 const Contact = () => {
-  console.log(process.env.APIKEY);
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
