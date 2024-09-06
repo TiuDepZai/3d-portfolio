@@ -1,0 +1,23 @@
+name: Deploy Portfolio
+
+on:
+  push:
+    branches:
+      - main  # Triggers on every push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Runs the job on an Ubuntu machine
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2  # Checks out the latest code in the repo
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no tiu@118.209.211.137 'cd /home/tiu/website && git pull origin main'
