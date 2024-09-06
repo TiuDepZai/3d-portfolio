@@ -32,7 +32,6 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
     emailjs
 
       .send(
@@ -45,7 +44,7 @@ const Contact = () => {
           to_email: "duongnguyen660@hotmail.com",
           message: form.message,
         },
-        process.env.APIKEY
+        'ayRYrshGcuTQwYe4j'
       )
       .then(
         () => {
@@ -101,7 +100,7 @@ const Contact = () => {
               name='email'
               value={form.email}
               onChange={handleChange}
-              placeholder="What is your web address?"
+              placeholder="What is your email address?"
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
           </label>

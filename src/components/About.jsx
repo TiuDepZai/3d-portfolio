@@ -43,8 +43,8 @@ const About = () => {
       <motion.p variants={fadeIn("","",0,1, 1)}
       className="mt-4 text-secondary text-[17px] max-w-3xl
       leading-[30px]">
-        I'm a software developer from Australia. 
-        My motto is if you can imagine it, we can make it.
+       &#x2022; I'm a software developer from Australia. <br/><br/>
+       &#x2022; I'm the only component you need for tech.
       </motion.p>
       
       <div className='mt-20 flex flex-wrap gap-10'>

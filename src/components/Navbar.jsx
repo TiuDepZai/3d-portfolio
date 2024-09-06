@@ -21,8 +21,7 @@ const Navbar = () => {
           window.scrollTo(0,0);
         }}
         >
-          <img src={logo} alt="logo" className='text-white px-2 w-12 h-12 object-contain'/>
-          <p className='text-white text-[18px] font-bold cursor-pointer flex'>Nguyen &nbsp; <span className='sm:block hidden'>| Duong</span></p>
+          <p className='text-white text-[20px] font-bold cursor-pointer flex'>&lt; iTiu / &gt;</p>
         </Link>
         <ul className='list-non items-center hidden sm:flex flex-row gap-10 px-10'>
           {navLinks.map((Link) => (
