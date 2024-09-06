@@ -1,5 +1,5 @@
 name: Deploy Portfolio
-
+# please work
 on:
   push:
     branches:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no tiu@118.209.211.117 '
+          ssh -o StrictHostKeyChecking=yes 118.209.211.117 '
             cd /home/tiu/website/3d-portfolio &&
             git pull origin main &&
             npm install &&
