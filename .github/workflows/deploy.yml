@@ -20,4 +20,10 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no tiu@118.209.211.137 'cd /home/tiu/website && git pull origin main'
+          ssh -o StrictHostKeyChecking=no user@your-server-ip '
+            cd /home/tiu/website/3d-portfolio &&
+            git pull origin main &&
+            npm install &&
+            npm run build &&
+            npm run host
+          '
