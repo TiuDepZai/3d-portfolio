@@ -13,11 +13,22 @@ jobs:
         with:
           node-version: '20'  # Use the Node.js version you need
 
+      # - name: Check for Node.js
+      #   run: |
+      #     if command -v node > /dev/null 2>&1; then
+      #       echo "Node.js is already installed. Version: $(node -v)"
+      #     else
+      #       echo "Node.js is not installed. Installing Node.js..."
+      #       # Example installation steps; modify as needed
+      #       curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+      #       sudo apt-get install -y nodejs
+      #     fi
+
       - name: Install Dependencies
         run: npm install  # Install project dependencies
 
-      - name: Build Project
-        run: npm run build  # Build the project
+      # - name: Build Project
+      #   run: npm run build  # Build the project
 
       - name: Run Vite Dev Server
         run: npm run dev  # Start the Vite development server
