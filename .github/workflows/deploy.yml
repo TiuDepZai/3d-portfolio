@@ -1,29 +1,15 @@
-name: Deploy to Self-Hosted Server
-
-on:
-  push:
-    branches:
-      - main  # Trigger this workflow on pushes to the main branch
-
+name: remote ssh command
+on: [push]
 jobs:
-  deploy:
-    runs-on: ubuntu-latest  # This runs on a GitHub-hosted runner
-
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2  # Checks out the code from the repository
-
-      - name: Set up SSH Key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Using the secret SSH private key
-
-      - name: Deploy to Server
-        run: |
-          ssh -o StrictHostKeyChecking=no tiu@14.200.242.54 << 'EOF'
-            cd /home/tiu/website/3d-portfolio
-            git pull origin main  # Pull the latest code from GitHub
-            npm install           # Install the dependencies
-            npm run build         # Build the project
-            npm run host          # Start the server
-          EOF
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
