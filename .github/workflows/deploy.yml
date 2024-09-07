@@ -1,44 +1,41 @@
-name: remote ssh command
-on: [push]
+name: Run Development Server
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  build:
-    name: Build
+  dev:
     runs-on: self-hosted
+
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Use the Node.js version you need
-
-      # - name: Check for Node.js
-      #   run: |
-      #     if command -v node > /dev/null 2>&1; then
-      #       echo "Node.js is already installed. Version: $(node -v)"
-      #     else
-      #       echo "Node.js is not installed. Installing Node.js..."
-      #       # Example installation steps; modify as needed
-      #       curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-      #       sudo apt-get install -y nodejs
-      #     fi
+          node-version: '20'
 
       - name: Install Dependencies
-        run: npm install  # Install project dependencies
-
-      # - name: Build Project
-      #   run: npm run build  # Build the project
-
-      - name: Run Vite Dev Server in Background
-        run: |
-          nohup npm run dev &> dev.log &
+        run: npm install
 
       - name: Display Public IP Address
         run: |
           echo "Fetching public IP address..."
           PUBLIC_IP=$(curl -s ifconfig.me)
           echo "Public IP Address: $PUBLIC_IP"
+
+      - name: Display Internal IP Address
+        run: |
+          echo "Fetching internal IP address..."
+          INTERNAL_IP=$(hostname -I | awk '{print $1}')
+          echo "Internal IP Address: $INTERNAL_IP"
+
+      - name: Run Vite Dev Server in Background
+        run: |
+          nohup npm run dev &> dev.log &
 
       - name: Notify Success
         run: echo "Development server is running in the background."
