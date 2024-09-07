@@ -1,24 +1,19 @@
-  name: Deploy 🚀
-    on:
-      push:
-        branches:
-          - master
-    jobs:
-      deploy:
-        runs-on: ubuntu-latest
+name: Deploy Portfolio
+# please work
+on:
+  push:
+    branches:
+      - main  # Triggers on every push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Runs the job on an Ubuntu machine
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2  # Checks out the latest code in the repo
+
+      - name: Set up SSH
         steps:
-          - name: Checkout code
-            uses: actions/checkout@v2
-          - name: Install Node.js
-            uses: actions/setup-node@v2
-            with:
-              node-version: '16.x'
-          - name: Install dependencies
-            run: npm install
-          - name: Build project
-            run: npm run build
-          - name: SSH Deploy
-            run: |
-              sshpass -p ${{ secrets.PSWD }} ssh -o StrictHostKeyChecking=no -p 22 ${{ secrets.USER}}@${{ secrets.VPS_IP }} 'cd /home/adam && ./deploy.sh'
-            env:
-              SSHPASS: ${{ secrets.PSWD }}
+          - run: ssh -o StrictHostKeyChecking=no tiu@118.209.211.137
+          - run: echo 'hi' > fromgithub.txt
+        
