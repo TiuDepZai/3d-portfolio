@@ -15,11 +15,5 @@ jobs:
       - name: Set up SSH
         run: |
           # Add your private key from GitHub Secrets
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-          
-          # Add the remote server to known hosts to avoid host checking prompts
-          ssh-keyscan -H 118.209.211.137 >> ~/.ssh/known_hosts
-          
-          # Test SSH connection
-          ssh -i private_key.pem tiu@118.209.211.137 'echo "Connected to the server!"'
+          ssh tiu@118.209.211.137
+          echo 'hi' > helloFromGithub.txt
