@@ -19,7 +19,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Using the secret SSH private key
 
       - name: Deploy to Server
-        run: ssh -o StrictHostKeyChecking=no tiu@14.200.242.54 << 'EOF'
+        run: |
+          ssh -o StrictHostKeyChecking=no tiu@14.200.242.54 << 'EOF'
             cd /home/tiu/website/3d-portfolio
             git pull origin main  # Pull the latest code from GitHub
             npm install           # Install the dependencies
