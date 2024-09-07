@@ -15,7 +15,7 @@ jobs:
       - name: Set up SSH
         run: |
           # SSH to server
-          ssh -v -t tiu@14.200.242.54 << EOF
+          ssh -vvv -t tiu@14.200.242.54 << EOF
           
             echo "hi" > helloFromGithub.txt
           
