@@ -30,7 +30,22 @@ jobs:
       # - name: Build Project
       #   run: npm run build  # Build the project
 
-      - name: Run Vite Dev Server
-        run: npm run dev  # Start the Vite development server
-        env:
-          PORT: 5173  # Optionally set environment variables, if needed
+      - name: Run Vite Dev Server in Background
+        run: |
+          nohup npm run dev &> dev.log &
+
+      - name: Display IP Address
+        run: |
+          echo "Runner IP Address:"
+          ifconfig | grep inet | grep -v 127.0.0.1
+          # Or using `ip` command
+          ip addr show | grep inet | grep -v 127.0.0.1
+          
+      - name: Display Public IP Address
+        run: |
+          echo "Fetching public IP address..."
+          PUBLIC_IP=$(curl -s ifconfig.me)
+          echo "Public IP Address: $PUBLIC_IP
+
+      - name: Notify Success
+        run: echo "Development server is running in the background."
