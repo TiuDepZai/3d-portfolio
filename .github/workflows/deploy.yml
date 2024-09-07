@@ -1,12 +1,13 @@
 name: Deploy Portfolio
+
 on:
   push:
     branches:
-      - main
+      - main  # Triggers on every push to the main branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # Runs the job on your self-hosted runner
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -22,5 +23,10 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Deploy Project
-        run: npm run host
+      - name: Deploy to Raspberry Pi
+        run: |
+          cd /home/tiu/portfolio
+          git pull origin main  # Update repository
+          npm install            # Install dependencies
+          npm run build          # Build the project
+          npm run host           # Start the server
