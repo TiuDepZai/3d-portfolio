@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "Fetching public IP address..."
           PUBLIC_IP=$(curl -s ifconfig.me)
-          echo "Public IP Address: $PUBLIC_IP
+          echo "Public IP Address: $PUBLIC_IP"
 
       - name: Notify Success
         run: echo "Development server is running in the background."
