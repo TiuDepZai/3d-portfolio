@@ -11,8 +11,7 @@ jobs:
     steps:
       - name: Deploy to Raspberry Pi
         run: |
-          echo pwd
-          cd /home/tiu/portfolio
+
           git pull origin main  # Update repository
           npm install            # Install dependencies
           npm run build          # Build the project
