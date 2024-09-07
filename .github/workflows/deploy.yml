@@ -15,5 +15,4 @@ jobs:
       - name: Set up SSH
         run: |
           # Add your private key from GitHub Secrets
-          ssh tiu@118.209.211.137
-          echo 'hi' > helloFromGithub.txt
+          ssh -t tiu@118.209.211.137 'echo "hi" > helloFromGithub.txt'
