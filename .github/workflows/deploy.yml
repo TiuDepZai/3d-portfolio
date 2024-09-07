@@ -16,9 +16,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Change Directory
-        run: cd /home/tiu/portfolio
-
       - name: Install Dependencies
         run: npm install
 
