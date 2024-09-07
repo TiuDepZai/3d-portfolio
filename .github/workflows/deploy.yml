@@ -9,10 +9,14 @@ jobs:
   deploy:
     runs-on: self-hosted  # Runs the job on your self-hosted runner
     steps:
-      - name: Deploy to Raspberry Pi
-        run: |
+      - name: Pull from origin main
+        run: git pull origin main  # Update repository
+          
+      - name: Npm install
+        run: npm install # Install dependencies
 
-          git pull origin main  # Update repository
-          npm install            # Install dependencies
-          npm run build          # Build the project
-          npm run host           # Start the server
+      - name: Npm run build
+        run: npm run build  # Build the application
+      
+      - name: Npm run host
+        run: npm run host           # Start the server
