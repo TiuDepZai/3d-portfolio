@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Vite Dev Server in Background
         run: |
-          nohup npm run dev &> dev.log &
-
+          nohup npm run dev -- --host > dev.log 2>&1 &
+          
       - name: Notify Success
         run: echo "Development server is running in the background."
