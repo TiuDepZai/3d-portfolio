@@ -46,11 +46,11 @@ jobs:
           path: ./dist
 
       - name: Injecting Secret
-        env:
-          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  # Inject API key as environment variable
+   
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        with:
+        with:     
+          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
