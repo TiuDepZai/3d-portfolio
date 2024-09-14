@@ -1,4 +1,4 @@
-name: Run Development Server
+name: Deploy
 
 on:
   push:
@@ -6,43 +6,51 @@ on:
       - main
 
 jobs:
-  dev:
-    runs-on: self-hosted
-
-
+  build:
+    name: Build
+    runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v3
         with:
-          node-version: '20'
+          name: production-files
+          path: ./dist
 
-      - name: Install Dependencies
-        run: npm install
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
-      - name: Display Public IP Address
-        run: |
-          echo "Fetching public IP address..."
-          PUBLIC_IP=$(curl -s ifconfig.me)
-          echo "Public IP Address: $PUBLIC_IP"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Display Internal IP Address
-        run: |
-          echo "Fetching internal IP address..."
-          INTERNAL_IP=$(hostname -I | awk '{print $1}')
-          echo "Internal IP Address: $INTERNAL_IP"
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: production-files
+          path: ./dist
 
       - name: Injecting Secret
         env:
-        REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}
+          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  # Inject API key as environment variable
 
-      - name: Run Vite Dev Server in Background
-        run: |
-          nohup npm run dev -- --host > dev.log 2>&1 &
-          
-      - name: Notify Success
-        run: echo "Development server is running in the background."
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
