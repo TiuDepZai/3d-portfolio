@@ -9,7 +9,10 @@ jobs:
   dev:
     runs-on: self-hosted
 
+
+
     steps:
+
       - name: Checkout Code
         uses: actions/checkout@v2
 
@@ -32,6 +35,10 @@ jobs:
           echo "Fetching internal IP address..."
           INTERNAL_IP=$(hostname -I | awk '{print $1}')
           echo "Internal IP Address: $INTERNAL_IP"
+
+      - name: Injecting Secret
+        env:
+        REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}
 
       - name: Run Vite Dev Server in Background
         run: |
