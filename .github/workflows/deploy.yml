@@ -45,12 +45,10 @@ jobs:
           name: production-files
           path: ./dist
 
-      - name: Injecting Secret
-   
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        with:     
-          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  # Inject the secret here
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          # Ensure GitHub token is present
+        with:
           publish_dir: ./dist
