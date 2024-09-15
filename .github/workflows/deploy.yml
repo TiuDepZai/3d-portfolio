@@ -47,8 +47,8 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        env:
-          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  # Inject the secret here
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          # Ensure GitHub token is present
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Pass the GitHub token
           publish_dir: ./dist
+        env:
+          REACT_APP_EMAILJS_USER_ID: ${{ secrets.APIKEY }}  # Inject API key
