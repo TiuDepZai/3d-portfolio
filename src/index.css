@@ -11,6 +11,8 @@
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
   color-scheme: dark;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .hash-span {
@@ -200,5 +202,18 @@
       0em 2.5em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.5),
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0em #ffffff;
+  }
+}
+
+/* Add will-change for smoother animations */
+.animate-smooth {
+  will-change: transform, opacity;
+}
+
+/* Optimize mobile performance */
+@media (max-width: 768px) {
+  .reduce-motion {
+    transition: none !important;
+    animation: none !important;
   }
 }

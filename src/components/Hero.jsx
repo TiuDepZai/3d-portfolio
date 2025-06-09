@@ -1,49 +1,91 @@
-import React from 'react'
-import {motion} from 'framer-motion';
-import {styles} from '../styles';
-import { ComputersCanvas } from './canvas';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { styles } from '../styles';
+import { navLinks } from '../constants';
+import { motion } from 'framer-motion';
 
-const Hero = () => {
+const Navbar = () => {
+  const [active, setActive] = useState('');
+  const [toggle, setToggle] = useState(false);
+
   return (
-    <section className='relative w-full h-screen mx-auto'>
-      <div className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl 
-      mx-auto flex flex-row items-start gap-5`}>
-          <div className='flex flex-col justify-center
-          items-center mt-5'>
-            <div className='w-5 h-5 rounded-full bg-[#914eff]'/>
-            <div className='w-1 sm:h-80 h-40 violet-gradient'/>
+    <nav className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-[#0F1923]`}>
+      <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
+        <Link
+          to='/'
+          className='flex items-center gap-2'
+          onClick={() => {
+            setActive('');
+            window.scrollTo(0, 0);
+          }}
+        >
+          <div className='w-10 h-10 flex items-center justify-center border-2 border-[#66FCFF] hover:border-[#FF4655] transition-colors duration-300'>
+            <span className='text-[#66FCFF] font-bold text-xl'>T</span>
           </div>
-        <div>
-          <h1 className={`${styles.heroHeadText}`}>Hi I'm, <span className='text-[#915eff]'>Tiu</span></h1>
-          <p className={`${styles.heroSubText} mt-2 text-white-100`}>
-            This is my <br className='sm:block hidden'/>
-            Portfolio
+          <p className='text-[#ECE8E1] text-[18px] font-bold cursor-pointer flex'>
+            Tiu &nbsp;
+            <span className='sm:block hidden text-[#66FCFF]'>| Developer</span>
           </p>
+        </Link>
+
+        <ul className='list-none hidden sm:flex flex-row gap-10'>
+          {navLinks.map((link) => (
+            <li
+              key={link.id}
+              className={`${
+                active === link.title 
+                  ? 'text-[#66FCFF]' 
+                  : 'text-[#ECE8E1]'
+              } hover:text-[#66FCFF] text-[18px] font-medium cursor-pointer transition-colors duration-300`}
+              onClick={() => setActive(link.title)}
+            >
+              <a href={`#${link.id}`}>{link.title}</a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile menu */}
+        <div className='sm:hidden flex flex-1 justify-end items-center'>
+          <div
+            className='w-[28px] h-[28px] cursor-pointer border-2 border-[#66FCFF] flex items-center justify-center'
+            onClick={() => setToggle(!toggle)}
+          >
+            <span className={`block w-4 transition-transform duration-300 ${toggle ? 'rotate-45 translate-y-[2px]' : ''}`}>
+              <span className='block w-full h-[2px] bg-[#66FCFF] mb-1'></span>
+              <span className={`block w-full h-[2px] bg-[#66FCFF] ${toggle ? 'hidden' : ''}`}></span>
+              <span className={`block w-full h-[2px] bg-[#66FCFF] ${toggle ? '-rotate-90 -translate-y-[2px]' : ''}`}></span>
+            </span>
+          </div>
+
+          <motion.div
+            className={`${!toggle ? 'hidden' : 'flex'} p-6 bg-[#1F2B3E] absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 border border-[#66FCFF]`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: toggle ? 1 : 0, y: toggle ? 0 : -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ul className='list-none flex justify-end items-start flex-col gap-4'>
+              {navLinks.map((link) => (
+                <li
+                  key={link.id}
+                  className={`${
+                    active === link.title 
+                      ? 'text-[#66FCFF]' 
+                      : 'text-[#ECE8E1]'
+                  } font-poppins font-medium cursor-pointer text-[16px]`}
+                  onClick={() => {
+                    setToggle(!toggle);
+                    setActive(link.title);
+                  }}
+                >
+                  <a href={`#${link.id}`}>{link.title}</a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
       </div>
-      <ComputersCanvas/>
+    </nav>
+  );
+};
 
-      <div className="absolute xs:bottom-10 bottom-32 w-full flex
-      justify-center items-center">
-        <a href="#about">
-          <div className='W-[35px] h-[64px] rounded-3xl
-          border-4 border-secondary flex justify-center
-          items-start p-2'>
-            <motion.div 
-              animate={{
-                y: [0, 24, 0]
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: 'loop'
-              }}
-              className="w-3 h-3 rounded-full bg-secondary mb-1"/>
-          </div>
-        </a>
-      </div>
-    </section>
-  )
-}
-
-export default Hero
+export default Navbar;

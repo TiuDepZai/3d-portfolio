@@ -20,50 +20,41 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { target } = e;
-    const { name, value } = target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    emailjs
 
+    emailjs
       .send(
-        'service_gp8bwte',
-        'template_d1jwjya',
+        'service_id',
+        'template_id',
         {
           from_name: form.name,
-          to_name: "Nguyen Duong",
+          to_name: 'Tiu',
           from_email: form.email,
-          to_email: "duongnguyen660@hotmail.com",
+          to_email: 'your-email@example.com',
           message: form.message,
         },
-        process.env.REACT_APP_EMAILJS_USER_ID
+        'your_public_key'
       )
-      .then(
-        () => {
-          setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
-
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
-        },
-        (error) => {
-          setLoading(false);
-          console.error(error);
-
-          alert("Ahh, something went wrong. Please try again.");
-        }
-      );
+      .then(() => {
+        setLoading(false);
+        alert('Thank you. I will get back to you as soon as possible.');
+        setForm({
+          name: '',
+          email: '',
+          message: '',
+        });
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+        alert('Something went wrong.');
+      });
   };
 
   return (
@@ -72,10 +63,10 @@ const Contact = () => {
     >
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
+        className='flex-[0.75] bg-[#1F2B3E] p-8 rounded-2xl border border-[#66FCFF]'
       >
-        <p className={styles.sectionSubText}>Get in touch</p>
-        <h3 className={styles.sectionHeadText}>Contact.</h3>
+        <p className={`${styles.sectionSubText} text-[#66FCFF]`}>Get in touch</p>
+        <h3 className={`${styles.sectionHeadText} text-[#ECE8E1]`}>Contact.</h3>
 
         <form
           ref={formRef}
@@ -83,44 +74,47 @@ const Contact = () => {
           className='mt-12 flex flex-col gap-8'
         >
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your Name</span>
+            <span className='text-[#ECE8E1] font-medium mb-4'>Your Name</span>
             <input
               type='text'
               name='name'
               value={form.name}
               onChange={handleChange}
-              placeholder="What is your name?"
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              placeholder="What's your name?"
+              className='bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
+                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300'
             />
           </label>
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your email</span>
+            <span className='text-[#ECE8E1] font-medium mb-4'>Your Email</span>
             <input
               type='email'
               name='email'
               value={form.email}
               onChange={handleChange}
-              placeholder="What is your email address?"
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              placeholder="What's your email?"
+              className='bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
+                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300'
             />
           </label>
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your Message</span>
+            <span className='text-[#ECE8E1] font-medium mb-4'>Your Message</span>
             <textarea
-              rows={7}
+              rows='7'
               name='message'
               value={form.message}
               onChange={handleChange}
-              placeholder='What you want to say?'
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              placeholder='What do you want to say?'
+              className='bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
+                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300'
             />
           </label>
 
           <button
             type='submit'
-            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
+            className='valorant-button w-fit'
           >
-            {loading ? "Sending..." : "Send"}
+            {loading ? 'Sending...' : 'Send'}
           </button>
         </form>
       </motion.div>

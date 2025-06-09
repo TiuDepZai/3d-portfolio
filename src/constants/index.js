@@ -2,6 +2,7 @@ import {
   emajin,
   skinman,
   mobile,
+  computer,
   backend,
   creator,
   web,
@@ -25,6 +26,8 @@ import {
   jobit,
   tripguide,
   threejs,
+  tableTennis,
+  solution,
 } from "../assets";
 
 export const navLinks = [
@@ -52,17 +55,18 @@ export const navLinks = [
 
 const services = [
   {
-    title: "Web Developer",
-    icon: web,
+    title: "Technological Solution Provider",
+    icon: solution,
   },
   {
-    title: "React Native Developer",
-    icon: mobile,
+    title: "Gamer",
+    icon: computer,
   },
   {
-    title: "Backend Developer",
-    icon: backend,
+    title: "Table Tennis Player",
+    icon: tableTennis,
   },
+
 ];
 
 const technologies = [
@@ -119,7 +123,8 @@ const language = {
   php: 'text-purple-100',
   react: 'blue-text-gradient',
   'c#': 'text-purple-900',
-  html:'text-orange-900'
+  html:'text-orange-900',
+  python: 'text-blue-300',
 };
 
 const experiences = [
