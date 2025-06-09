@@ -68,44 +68,55 @@ const getColorForLanguage = (lang) => {
 const Works = () => {
   const [projects, setProjects] = useState([]);
 
-  const GitHub_Token = process.env.REACT_APP_GITHUB_TOKEN; // Ensure you have a .env file with this variable
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        
-        const response = await fetch('https://api.github.com/users/TiuDepZai/repos');
+        const response = await fetch('https://api.github.com/users/TiuDepZai/repos', {
+          headers: {
+            Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+          },
+        });
+
         const data = await response.json();
 
-        const projectPromises = data.map(async (repo) => {
-          // Skip forks (optional)
-          if (repo.fork) return null;
+        if (!Array.isArray(data)) {
+          console.error('GitHub API error:', data);
+          return;
+        }
 
+        const projectPromises = data.map(async (repo) => {
           const tags = [];
-          const languageResponse = await fetch(repo.languages_url);
+
+          const languageResponse = await fetch(repo.languages_url, {
+            headers: {
+              Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+            },
+          });
           const languages = await languageResponse.json();
 
           Object.keys(languages).forEach((lang) => {
-            tags.push({
-              name: lang.toLowerCase(),
-              color: getColorForLanguage(lang),
-            });
+            let displayName = lang.toLowerCase();
+            if (displayName === 'c#') displayName = 'c-sharp';
+            tags.push({ name: displayName, color: getColorForLanguage(lang) });
+
           });
 
           return {
             name: repo.name,
             description: repo.description,
-            tags,
-            image: repo.homepage || repo.owner.avatar_url, // Use homepage as image if available
+            tags: tags,
+            image: repo.owner.avatar_url,
             source_code_link: repo.html_url,
           };
         });
 
         const projectData = await Promise.all(projectPromises);
-        setProjects(projectData.filter(Boolean)); // Remove nulls from skipped forks
+        setProjects(projectData);
       } catch (error) {
         console.error('Error fetching GitHub repositories:', error);
       }
     };
+
 
     fetchProjects();
   }, []);
