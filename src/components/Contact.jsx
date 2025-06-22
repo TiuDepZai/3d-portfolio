@@ -7,8 +7,6 @@ import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
-
-
 const Contact = () => {
   const formRef = useRef();
   const [form, setForm] = useState({
@@ -16,7 +14,6 @@ const Contact = () => {
     email: "",
     message: "",
   });
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -26,44 +23,48 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!form.name || !form.email || !form.message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     setLoading(true);
 
     emailjs
       .send(
-        'service_id',
-        'template_id',
+        import.meta.env.VITE_EMAILJS_SERVICEID,
+        import.meta.env.VITE_EMAILJS_TEMPLATEID,
         {
           from_name: form.name,
-          to_name: 'Tiu',
+          to_name: "Tiu",
           from_email: form.email,
-          to_email: 'your-email@example.com',
+          to_email: "your-email@example.com",
           message: form.message,
         },
-        'your_public_key'
+        import.meta.env.VITE_EMAILJS_PUBLICKEY
       )
       .then(() => {
         setLoading(false);
-        alert('Thank you. I will get back to you as soon as possible.');
+        alert("Thank you. I will get back to you as soon as possible.");
         setForm({
-          name: '',
-          email: '',
-          message: '',
+          name: "",
+          email: "",
+          message: "",
         });
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
-        alert('Something went wrong.');
+        console.error("EmailJS Error:", error);
+        alert("Something went wrong. Please try again later.");
       });
   };
 
   return (
-    <div
-      className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden`}
-    >
+    <div className="xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden">
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className='flex-[0.75] bg-[#1F2B3E] p-8 rounded-2xl border border-[#66FCFF]'
+        className="flex-[0.75] bg-[#1F2B3E] p-8 rounded-2xl border border-[#66FCFF]"
       >
         <p className={`${styles.sectionSubText} text-[#66FCFF]`}>Get in touch</p>
         <h3 className={`${styles.sectionHeadText} text-[#ECE8E1]`}>Contact.</h3>
@@ -71,57 +72,60 @@ const Contact = () => {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className='mt-12 flex flex-col gap-8'
+          className="mt-12 flex flex-col gap-8"
         >
-          <label className='flex flex-col'>
-            <span className='text-[#ECE8E1] font-medium mb-4'>Your Name</span>
+          <label className="flex flex-col">
+            <span className="text-[#ECE8E1] font-medium mb-4">Your Name</span>
             <input
-              type='text'
-              name='name'
+              type="text"
+              name="name"
               value={form.name}
               onChange={handleChange}
               placeholder="What's your name?"
-              className='bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
-                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300'
+              className="bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
+                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300"
             />
           </label>
-          <label className='flex flex-col'>
-            <span className='text-[#ECE8E1] font-medium mb-4'>Your Email</span>
+
+          <label className="flex flex-col">
+            <span className="text-[#ECE8E1] font-medium mb-4">Your Email</span>
             <input
-              type='email'
-              name='email'
+              type="email"
+              name="email"
               value={form.email}
               onChange={handleChange}
               placeholder="What's your email?"
-              className='bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
-                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300'
+              className="bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
+                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300"
             />
           </label>
-          <label className='flex flex-col'>
-            <span className='text-[#ECE8E1] font-medium mb-4'>Your Message</span>
+
+          <label className="flex flex-col">
+            <span className="text-[#ECE8E1] font-medium mb-4">Your Message</span>
             <textarea
-              rows='7'
-              name='message'
+              rows="7"
+              name="message"
               value={form.message}
               onChange={handleChange}
-              placeholder='What do you want to say?'
-              className='bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
-                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300'
+              placeholder="What do you want to say?"
+              className="bg-[#0F1923] py-4 px-6 text-[#ECE8E1] rounded-lg border border-[#66FCFF] 
+                font-medium focus:outline-none focus:border-[#FF4655] transition-colors duration-300"
             />
           </label>
 
           <button
-            type='submit'
-            className='valorant-button w-fit'
+            type="submit"
+            className="valorant-button w-fit"
+            disabled={loading}
           >
-            {loading ? 'Sending...' : 'Send'}
+            {loading ? "Sending..." : "Send"}
           </button>
         </form>
       </motion.div>
 
       <motion.div
         variants={slideIn("right", "tween", 0.2, 1)}
-        className='xl:flex-1 xl:h-auto md:h-[550px] h-[350px]'
+        className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
       >
         <EarthCanvas />
       </motion.div>
