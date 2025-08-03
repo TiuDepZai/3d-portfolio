@@ -1,8 +1,9 @@
 {
   "rewrites": [
     {
-      "source": "/btta/:path*",
-      "destination": "btta-tiudepzais-projects.vercel.app"
+      "source": "/btta",
+      "destination": "https://btta-tiudepzais-projects.vercel.app"   
     }
-  ]
+    
+]
 }
