@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/btta/:path*",
-      "destination": "https://btta-tiudepzais-projects.vercel.app/btta/:path*"
+      "destination": "https://btta-tiudepzais-projects.vercel.app/:path*"
     }
   ]
 }
